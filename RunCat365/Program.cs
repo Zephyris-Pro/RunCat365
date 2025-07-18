@@ -12,15 +12,17 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-using RunCat365.Properties;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
+using RunCat365.Properties;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System.Resources;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Resources;
+using System.Windows.Forms;
 
 namespace RunCat365
 {
@@ -51,11 +53,47 @@ namespace RunCat365
         }
     }
 
+    public class DarkModeRenderer : ToolStripProfessionalRenderer
+    {
+        public DarkModeRenderer() : base(new DarkModeColorTable()) { 
+        
+        }
+
+
+        // White arrow for dropdown items
+        protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+        {
+            e.ArrowColor = Color.White;
+            base.OnRenderArrow(e);
+        }
+    }
+
+    public class DarkModeColorTable : ProfessionalColorTable
+    {
+        public static readonly Color BaseColor = Color.FromArgb(43, 43, 43);
+        public static readonly Color HoverColor = Color.FromArgb(53, 53, 53);
+        public static readonly Color BorderColor = Color.Transparent;
+
+        public override Color ToolStripDropDownBackground => BaseColor;
+        public override Color ImageMarginGradientBegin => BaseColor;
+        public override Color ImageMarginGradientMiddle => BaseColor;
+        public override Color ImageMarginGradientEnd => BaseColor;
+        public override Color MenuBorder => BorderColor;
+        public override Color MenuItemBorder => BorderColor;
+        public override Color MenuItemSelected => HoverColor;
+        public override Color MenuItemSelectedGradientBegin => HoverColor;
+        public override Color MenuItemSelectedGradientEnd => HoverColor;
+        public override Color MenuItemPressedGradientBegin => HoverColor;
+        public override Color MenuItemPressedGradientEnd => HoverColor;
+    }
+
     public class RunCat365ApplicationContext : ApplicationContext
     {
         private const int CPU_TIMER_DEFAULT_INTERVAL = 5000;
         private const int ANIMATE_TIMER_DEFAULT_INTERVAL = 200;
         private PerformanceCounter cpuUsage;
+        private PerformanceCounter ramUsage;
+        private PerformanceCounter diskFree;
         private ToolStripMenuItem runnerMenu;
         private ToolStripMenuItem themeMenu;
         private ToolStripMenuItem startupMenu;
@@ -83,6 +121,17 @@ namespace RunCat365
 
             cpuUsage = new PerformanceCounter("Processor Information", "% Processor Utility", "_Total");
             _ = cpuUsage.NextValue(); // discards first return value
+
+            ramUsage = new PerformanceCounter("Memory", "Available MBytes");
+            _ = ramUsage.NextValue();
+
+
+            // TODO Check if there's multiple drive letters
+
+            // Actual driveLetter
+            string driveLetter = Path.GetPathRoot(Environment.SystemDirectory)?.TrimEnd('\\');
+            diskFree = new PerformanceCounter("LogicalDisk", "% Free Space", driveLetter);
+            _ = diskFree.NextValue();
 
             var items = new List<ToolStripMenuItem>();
             foreach (Runner r in Enum.GetValues(typeof(Runner)))
@@ -131,6 +180,7 @@ namespace RunCat365
 
             ContextMenuStrip contextMenuStrip = new ContextMenuStrip(new Container());
             contextMenuStrip.Items.AddRange(
+            
                 runnerMenu,
                 themeMenu,
                 fpsMaxLimitMenu,
@@ -140,13 +190,20 @@ namespace RunCat365
                 new ToolStripMenuItem("Exit", null, Exit)
             );
 
+
+            bool isSystemDark = GetSystemTheme() == Theme.Dark;
+            bool enableDarkMode = manualTheme == Theme.Dark || (manualTheme == Theme.System && isSystemDark);
+
+            ApplyDarkTheme(contextMenuStrip, enableDarkMode);
+
+
             SetIcons();
 
             notifyIcon = new NotifyIcon()
             {
                 Icon = icons[0],
                 ContextMenuStrip = contextMenuStrip,
-                Text = "0.0%",
+                Text = "Loading...",
                 Visible = true
             };
 
@@ -229,6 +286,12 @@ namespace RunCat365
             UpdateCheckedState(item, themeMenu);
             Enum.TryParse(item.Text, out manualTheme);
             SetIcons();
+
+            bool isSystemDark = GetSystemTheme() == Theme.Dark;
+            bool enableDarkMode = manualTheme == Theme.Dark || (manualTheme == Theme.System && isSystemDark);
+
+            ApplyDarkTheme(notifyIcon.ContextMenuStrip, enableDarkMode);
+
         }
 
         private void SetFPSMaxLimit(object sender, EventArgs e)
@@ -284,11 +347,18 @@ namespace RunCat365
             animateTimer.Start();
         }
 
+        // Since there's now multiple informations (CPU, RAM, Disk ...) we probably need to rename this method.
         private void CPUTick()
         {
             // Range of CPU percentage: 0-100 (%)
             float cpuPercentage = Math.Min(100, cpuUsage.NextValue());
-            notifyIcon.Text = $"CPU: {cpuPercentage:f1}%";
+
+            float ramPercentage = GetMemoryUsagePercentage();
+
+            float diskPercentage = 100f - Math.Min(100, diskFree.NextValue());
+
+            notifyIcon.Text = $"CPU: {cpuPercentage:f1}%\nRAM: {ramPercentage:f1}%\nStorage: {diskPercentage:f1}% used";
+
             // Range of interval: 25-500 (ms) = 2-40 (fps)
             interval = 500.0f / (float)Math.Max(1.0f, (cpuPercentage / 5.0f) * fpsMaxLimit.GetRate());
 
@@ -309,16 +379,91 @@ namespace RunCat365
             cpuTimer.Start();
         }
 
-        private void HandleDoubleClick(object Sender, EventArgs e)
+
+        // This is probably triggering AV checks.
+        //private void HandleDoubleClick(object Sender, EventArgs e)
+        //{
+        //    var startInfo = new ProcessStartInfo
+        //    {
+        //        FileName = "powershell",
+        //        UseShellExecute = false,
+        //        Arguments = " -c Start-Process taskmgr.exe",
+        //        CreateNoWindow = true,
+        //    };
+        //    Process.Start(startInfo);
+        //}
+
+
+        // This is much less suspicious to AVs and work's across Windows 7–11.
+        private void HandleDoubleClick(object sender, EventArgs e)
         {
-            var startInfo = new ProcessStartInfo
+            try
             {
-                FileName = "powershell",
-                UseShellExecute = false,
-                Arguments = " -c Start-Process taskmgr.exe",
-                CreateNoWindow = true,
-            };
-            Process.Start(startInfo);
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "taskmgr.exe",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to open Task Manager: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private float GetMemoryUsagePercentage()
+        {
+            float availableMb = ramUsage.NextValue();
+            float totalMb = GetTotalMemoryInMBytes();
+            float usedMb = totalMb - availableMb;
+            return (usedMb / totalMb) * 100.0f;
+        }
+
+        private float GetTotalMemoryInMBytes()
+        {
+            return new ComputerInfo().TotalPhysicalMemory / (1024f * 1024f);
+        }
+        private void ApplyDarkColorsToMenuItems(ToolStripItemCollection items)
+        {
+            foreach (ToolStripItem item in items)
+            {
+                item.ForeColor = Color.White;
+                item.BackColor = DarkModeColorTable.BaseColor;
+
+                if (item is ToolStripMenuItem menuItem && menuItem.DropDownItems.Count > 0)
+                {
+                    ApplyDarkColorsToMenuItems(menuItem.DropDownItems);
+                }
+            }
+        }
+        private void ResetItemsColors(ToolStripItemCollection items)
+        {
+            foreach (ToolStripItem item in items)
+            {
+                item.ForeColor = SystemColors.ControlText;
+                item.BackColor = SystemColors.Control;
+
+                if (item is ToolStripMenuItem menuItem && menuItem.HasDropDownItems)
+                {
+                    menuItem.DropDown.Renderer = new ToolStripProfessionalRenderer();
+                    ResetItemsColors(menuItem.DropDownItems);
+                }
+            }
+        }
+
+        private void ApplyDarkTheme(ContextMenuStrip menu, bool enabled)
+        {
+            if (enabled)
+            {
+                menu.Renderer = new DarkModeRenderer();
+                ApplyDarkColorsToMenuItems(menu.Items);
+            }
+            else
+            {
+                menu.Renderer = new ToolStripProfessionalRenderer();
+                ResetItemsColors(menu.Items);
+            }
         }
     }
 }

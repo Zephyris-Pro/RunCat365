@@ -5,6 +5,9 @@
         Cat,
         Parrot,
         Horse,
+        Puppy,
+        Dino,
+        Rabbit,
     }
 
     static class RunnerExtensions
@@ -19,6 +22,12 @@
                     return "Parrot";
                 case Runner.Horse:
                     return "Horse";
+                case Runner.Puppy:
+                    return "Puppy";
+                case Runner.Dino:
+                    return "Dino";
+                case Runner.Rabbit:
+                    return "Rabbit";
                 default:
                     return "";
             }
@@ -34,6 +43,12 @@
                     return 10;
                 case Runner.Horse:
                     return 14;
+                case Runner.Puppy:
+                    return 5;
+                case Runner.Dino:
+                    return 7;
+                case Runner.Rabbit:
+                    return 5;
                 default:
                     return 0;
             }

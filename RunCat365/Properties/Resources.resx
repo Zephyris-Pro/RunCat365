@@ -157,7 +157,7 @@
   <data name="dark_parrot_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\parrot\dark_parrot_7.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="dark_parrot_8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="&lt;" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\parrot\dark_parrot_8.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="dark_parrot_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -291,5 +291,107 @@
   </data>
   <data name="light_horse_13" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\horse\light_horse_13.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_puppy_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\light_puppy_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_puppy_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\light_puppy_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_puppy_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\light_puppy_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_puppy_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\light_puppy_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_puppy_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\light_puppy_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_puppy_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\dark_puppy_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_puppy_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\dark_puppy_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_puppy_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\dark_puppy_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_puppy_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\dark_puppy_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_puppy_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\puppy\dark_puppy_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_dino_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\light_dino_6.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_dino_6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\dino\dark_dino_6.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_rabbit_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\light_rabbit_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_rabbit_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\light_rabbit_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_rabbit_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\light_rabbit_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_rabbit_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\light_rabbit_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="light_rabbit_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\light_rabbit_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_rabbit_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\dark_rabbit_0.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_rabbit_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\dark_rabbit_1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_rabbit_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\dark_rabbit_2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_rabbit_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\dark_rabbit_3.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dark_rabbit_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\rabbit\dark_rabbit_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
