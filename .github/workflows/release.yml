@@ -40,9 +40,9 @@ jobs:
         with:
           name: RunCat365-win-x64
           path: |
-            "./publish/RunCat 365.exe"
-            "./publish/RunCat 365.pdb"
-            "./publish/RunCat 365.config"
+            "./publish/RunCat365.exe"
+            "./publish/RunCat365.pdb"
+            "./publish/RunCat365.config"
 
       - name: Generate build info
         id: var

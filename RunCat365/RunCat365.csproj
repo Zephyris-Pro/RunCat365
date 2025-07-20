@@ -19,7 +19,7 @@
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Kyome22/RunCat365</RepositoryUrl>
-    <AssemblyName>RunCat 365</AssemblyName>
+    <AssemblyName>RunCat365</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
