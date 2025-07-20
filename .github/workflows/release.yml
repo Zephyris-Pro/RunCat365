@@ -12,8 +12,10 @@ concurrency:
 jobs:
 
   build_release:
-
-    name: Build on windows-latest (win-x64)
+    strategy:
+      matrix:
+        arch: [win-x64, win-arm64]
+    name: Build on windows-latest (${{ matrix.arch }})
     runs-on: windows-latest
 
     outputs:
@@ -33,30 +35,30 @@ jobs:
         run: dotnet restore RunCat365.sln
 
       - name: Publish RunCat365 project
-        run: dotnet publish RunCat365/RunCat365.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true --output ./publish
+        run: dotnet publish RunCat365/RunCat365.csproj -c Release -r ${{ matrix.arch }} --self-contained true -p:PublishSingleFile=true -o ./publish
 
       - name: Archive Content
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: zip
-          filename: RunCat365-win-x64.zip
+          filename: RunCat365-${{ matrix.arch }}.zip
           directory: ./publish
-          path: .  
+          path: .
 
       - name: Move Zip Archive to ./zip
         run: |
           mkdir ./zip/
-          mv ./publish/RunCat365-win-x64.zip ./zip/
-          
+          mv ./publish/RunCat365-${{ matrix.arch }}.zip ./zip/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RunCat365-win-x64
-          path: |
-            ./zip/RunCat365-win-x64.zip
-          
+          name: RunCat365-${{ matrix.arch }}
+          path: ./zip/RunCat365-${{ matrix.arch }}.zip
+
       - name: Generate build info
         id: var
+        shell: bash
         run: |
           echo "full_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
           echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
@@ -65,6 +67,7 @@ jobs:
     name: Recreate Release
     runs-on: ubuntu-latest
     needs: build_release
+
     steps:
       - uses: actions/checkout@v4
 
@@ -77,18 +80,18 @@ jobs:
             const repo = context.repo.repo;
             const tag = "release";
 
-            const releases = await github.rest.repos.listReleases({owner: owner, repo: repo});
-            const release = releases.data.find(release => release.tag_name === tag);
+            const releases = await github.rest.repos.listReleases({ owner, repo });
+            const release = releases.data.find(r => r.tag_name === tag);
 
             if (release) {
-              await github.rest.repos.deleteRelease({owner: owner, repo: repo, release_id: release.id});
+              await github.rest.repos.deleteRelease({ owner, repo, release_id: release.id });
               console.log(`Deleted release with ID ${release.id}`);
             } else {
               console.log("No existing release found");
             }
 
             try {
-              await github.rest.git.deleteRef({owner: owner, repo: repo, ref: `tags/${tag}`});
+              await github.rest.git.deleteRef({ owner, repo, ref: `tags/${tag}` });
               console.log(`Deleted tag ${tag}`);
             } catch {
               console.log(`No tag ${tag} to delete`);
@@ -103,10 +106,10 @@ jobs:
         id: build_sha
         run: |
           checksums=""
-          for file in ./release_files/RunCat365-win-x64/RunCat365-*; do
-            if [ -f "$file" ]; then
-              hash=$(sha256sum "$file" | awk '{ print $1 }')
-              checksums+="**$(basename "$file")**: \`$hash\`"$'\n'
+          for zip in ./release_files/**/RunCat365-*.zip; do
+            if [ -f "$zip" ]; then
+              hash=$(sha256sum "$zip" | awk '{ print $1 }')
+              checksums+="**$(basename "$zip")**: \`$hash\`"$'\n'
             fi
           done
           if [ -n "$checksums" ]; then
@@ -135,5 +138,5 @@ jobs:
             ```
             ${{ needs.build_release.outputs.full_sha }}
             ```
-            
+
           files: ./release_files/**/*
