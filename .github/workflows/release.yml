@@ -35,16 +35,25 @@ jobs:
       - name: Publish RunCat365 project
         run: dotnet publish RunCat365/RunCat365.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true --output ./publish
 
-      - name: (DEBUG) List published files
-        run: Get-ChildItem -Path ./publish | Format-Table Name, Length
+      - name: Archive Content
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: zip
+          filename: RunCat365-win-x64.zip
+          directory: ./publish
+          path: .  
 
+      - name: Move Zip Archive to ./zip
+        run: |
+          mkdir ./zip/
+          mv ./publish/RunCat365-win-x64.zip ./zip/
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: RunCat365-win-x64
-          path: ./publish/RunCat365.exe
-                ./publish/RunCat365.pdb
-                ./publish/RunCat365.dll.config
+          path: |
+            ./zip/RunCat365-win-x64.zip
           
       - name: Generate build info
         id: var
@@ -94,7 +103,7 @@ jobs:
         id: build_sha
         run: |
           checksums=""
-          for file in ./release_files/RunCat365-win-x64/*; do
+          for file in ./release_files/RunCat365-win-x64/RunCat365-*; do
             if [ -f "$file" ]; then
               hash=$(sha256sum "$file" | awk '{ print $1 }')
               checksums+="**$(basename "$file")**: \`$hash\`"$'\n'
