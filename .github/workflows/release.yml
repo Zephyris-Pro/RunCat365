@@ -35,6 +35,9 @@ jobs:
       - name: Publish RunCat365 project
         run: dotnet publish RunCat365/RunCat365.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true --output ./publish
 
+      - name: (DEBUG) List published files
+        run: ls -lh ./publish
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
