@@ -36,7 +36,7 @@ jobs:
         run: dotnet publish RunCat365/RunCat365.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true --output ./publish
 
       - name: (DEBUG) List published files
-        run: ls -lh ./publish
+        run: Get-ChildItem -Path ./publish | Format-Table Name, Length
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
