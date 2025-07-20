@@ -42,11 +42,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: RunCat365-win-x64
-          path: |
-            "./publish/RunCat365.exe"
-            "./publish/RunCat365.pdb"
-            "./publish/RunCat365.config"
-
+          path: ./publish/RunCat365.exe
+                ./publish/RunCat365.pdb
+                ./publish/RunCat365.dll.config
+          
       - name: Generate build info
         id: var
         run: |
